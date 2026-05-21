@@ -21,14 +21,15 @@ export async function submitRsvp(data: { name: string; email: string }): Promise
     await connectToDatabase();
     await Rsvp.create({ name: data.name.trim(), email: data.email.trim() });
 
-    const emailResult = await sendConfirmationEmail(data.name.trim(), data.email.trim());
-    if (!emailResult.success) {
-      console.error("Failed to send confirmation email:", emailResult.error);
+    const emailResp = await sendConfirmationEmail(data.name.trim(), data.email.trim());
+    if (!emailResp.success) {
+      console.error("Failed to send confirmation email:", emailResp.error);
     }
 
     return { success: true };
   } catch (err) {
-    return { success: false, error: err instanceof Error ? err.message : "An unexpected error occurred" };
+    console.error("Failed to submit RSVP:", err);
+    return { success: false, error: "An unexpected error occurred. Please try again." };
   }
 }
 

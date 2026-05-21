@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { submitRsvp, adminLogin, getRsvps } from "@/lib/actions";
 
 vi.mock("@/lib/mongodb", () => ({
@@ -49,17 +49,38 @@ describe("submitRsvp", () => {
 });
 
 describe("adminLogin", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("returns true for correct password", async () => {
     vi.stubEnv("ADMIN_PASSWORD", "secret");
     const result = await adminLogin("secret");
     expect(result).toBe(true);
-    vi.unstubAllEnvs();
   });
 
   it("returns false for wrong password", async () => {
     vi.stubEnv("ADMIN_PASSWORD", "secret");
     const result = await adminLogin("wrong");
     expect(result).toBe(false);
-    vi.unstubAllEnvs();
+  });
+});
+
+describe("getRsvps", () => {
+  it("returns RSVPs when authed", async () => {
+    const result = await getRsvps();
+    expect(result).toHaveLength(1);
+    expect(result[0].name).toBe("Alice");
+  });
+
+  it("throws when not authed", async () => {
+    const { cookies } = await import("next/headers");
+    (cookies as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      set: vi.fn(),
+      get: vi.fn().mockReturnValue(undefined),
+      delete: vi.fn(),
+    });
+
+    await expect(getRsvps()).rejects.toThrow("Unauthorized");
   });
 });
