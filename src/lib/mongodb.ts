@@ -1,3 +1,14 @@
+import dns from "dns";
+
+// Configure reliable DNS servers at the entry point of DB connection to bypass local router/Windows SRV resolution failures
+try {
+  if (dns && typeof dns.setServers === "function") {
+    dns.setServers(["8.8.8.8", "8.8.4.4"]);
+  }
+} catch (e) {
+  console.warn("Failed to set custom DNS servers in mongodb.ts:", e);
+}
+
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI!;
