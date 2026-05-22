@@ -8,7 +8,7 @@ export interface FlowerConfig {
   offsetY: number;
   rotation: number;
   scale: number;
-  zIndex: number;
+  zIndex?: number;
 }
 
 export interface GroupConfig {
@@ -29,69 +29,69 @@ export function originTranslate(origin: string) {
 
 export const groups: GroupConfig[] = [
   {
-    anchorX: 100,
-    anchorY: 0,
-    flowers: [
+    "anchorX": 100,
+    "anchorY": 0,
+    "flowers": [
       {
-        path: "/images/flower 1.png",
-        origin: "center",
-        offsetX: -177,
-        offsetY: 142,
-        rotation: 180,
-        scale: 100,
-        zIndex: 10,
+        "path": "/images/flower 1.png",
+        "origin": "center",
+        "offsetX": -299,
+        "offsetY": 245,
+        "rotation": 177.9294735149913,
+        "scale": 165,
+        "zIndex": 10
       },
       {
-        path: "/images/flower 2.png",
-        origin: "top right",
-        offsetX: -584,
-        offsetY: -88,
-        rotation: 262,
-        scale: 100,
-        zIndex: 20,
+        "path": "/images/flower 2.png",
+        "origin": "top right",
+        "offsetX": -865,
+        "offsetY": -111,
+        "rotation": 255.21985466016645,
+        "scale": 160,
+        "zIndex": 10
       },
       {
-        path: "/images/flower 3.png",
-        origin: "top right",
-        offsetX: -275,
-        offsetY: 308,
-        rotation: 212,
-        scale: 73,
-        zIndex: 30,
-      },
-    ],
+        "path": "/images/flower 3.png",
+        "origin": "bottom left",
+        "offsetX": 295,
+        "offsetY": 275,
+        "rotation": 202.6485845640293,
+        "scale": 135,
+        "zIndex": 9
+      }
+    ]
   },
   {
-    anchorX: 0,
-    anchorY: 100,
-    flowers: [
+    "anchorX": 0,
+    "anchorY": 100,
+    "flowers": [
       {
-        path: "/images/flower 1.png",
-        origin: "bottom left",
-        offsetX: 0,
-        offsetY: 0,
-        rotation: 0,
-        scale: 100,
-        zIndex: 10,
+        "path": "/images/flower 1.png",
+        "origin": "bottom left",
+        "offsetX": -12,
+        "offsetY": 2,
+        "rotation": 359.9625475487243,
+        "scale": 125,
+        "zIndex": 10
       },
       {
-        path: "/images/flower 2.png",
-        origin: "bottom left",
-        offsetX: 115,
-        offsetY: 62,
-        rotation: 20,
-        scale: 100,
-        zIndex: 20,
+        "path": "/images/flower 2.png",
+        "origin": "bottom left",
+        "offsetX": 115,
+        "offsetY": 62,
+        "rotation": 20.036059238319524,
+        "scale": 125,
+        "zIndex": 10
       },
       {
-        path: "/images/flower 3.png",
-        origin: "bottom left",
-        offsetX: -131,
-        offsetY: -238,
-        rotation: 52,
-        scale: 70,
-        zIndex: 30,
-      },
-    ],
-  },
+        "path": "/images/flower 3.png",
+        "origin": "bottom left",
+        "offsetX": -212,
+        "offsetY": -282,
+        "rotation": 36.73098006588066,
+        "scale": 120,
+        "zIndex": 8
+      }
+    ]
+  }
 ];

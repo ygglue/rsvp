@@ -12,7 +12,7 @@ const ORIGINS = ["center", "top left", "top right", "bottom left", "bottom right
 export default function DesignEditor() {
   const router = useRouter();
   const [groups, setGroups] = useState<GroupConfig[]>(() =>
-    initialGroups.map((g) => ({ ...g, flowers: g.flowers.map((f) => ({ ...f })) }))
+    initialGroups.map((g) => ({ ...g, flowers: g.flowers.map((f) => ({ ...f, zIndex: f.zIndex ?? 10 })) }))
   );
   const [selectedGroup, setSelectedGroup] = useState(0);
   const [selectedFlower, setSelectedFlower] = useState(-1);
@@ -57,7 +57,7 @@ export default function DesignEditor() {
   }, [router]);
 
   useEffect(() => {
-    const update = () => setVwScale(window.innerWidth / REF_W);
+    const update = () => setVwScale(Math.max(0.5, window.innerWidth / REF_W));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -91,7 +91,7 @@ export default function DesignEditor() {
     const handleMouseMove = (e: MouseEvent) => {
       if (resizeRef.current) {
         const r = resizeRef.current;
-        const vwScale = window.innerWidth / REF_W;
+        const vwScale = Math.max(0.5, window.innerWidth / REF_W);
         const dx = (e.clientX - r.startX) / vwScale;
         const dy = (e.clientY - r.startY) / vwScale;
         const delta = Math.round(Math.max(dx, dy) / 3);
@@ -129,7 +129,7 @@ export default function DesignEditor() {
             anchorY: round1(ay),
           });
         } else {
-          const vwScale = window.innerWidth / REF_W;
+          const vwScale = Math.max(0.5, window.innerWidth / REF_W);
           patchFlower(d.gIdx, d.fIdx, {
             offsetX: Math.round(d.startOffsetX + dx / vwScale),
             offsetY: Math.round(d.startOffsetY + dy / vwScale),
@@ -391,7 +391,7 @@ export default function DesignEditor() {
                     style={{
                       left: f.offsetX,
                       top: f.offsetY,
-                      zIndex: isFlowerSelected ? f.zIndex + 1000 : f.zIndex,
+                      zIndex: isFlowerSelected ? (f.zIndex ?? 10) + 1000 : (f.zIndex ?? 10),
                       transform: `translate(${tx}%, ${ty}%) rotate(${f.rotation}deg) scale(${f.scale / 100})`,
                       transformOrigin: f.origin,
                       cursor: isFlowerSelected ? "grabbing" : "grab",
@@ -646,24 +646,22 @@ export default function DesignEditor() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              <div>
-                <label className="block text-xs text-slate-500 mb-0.5">
-                  Z-Index: {currentFlower.zIndex}
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="100"
-                  step="1"
-                  className="w-full h-1.5 accent-slate-800"
-                  value={currentFlower.zIndex}
-                  onChange={(e) =>
-                    patchFlower(selectedGroup, selectedFlower, {
-                      zIndex: Number(e.target.value),
-                    })
-                  }
-                />
+            <div>
+              <label className="block text-xs text-slate-500 mb-0.5">Z-Index</label>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => patchFlower(selectedGroup, selectedFlower, { zIndex: Math.max(1, (currentFlower.zIndex ?? 10) - 1) })}
+                  className="w-7 h-7 flex items-center justify-center border border-slate-200 rounded-md hover:bg-slate-100 text-slate-600 text-sm font-medium"
+                >
+                  −
+                </button>
+                <span className="w-7 text-center text-sm font-semibold text-slate-800">{currentFlower.zIndex ?? 10}</span>
+                <button
+                  onClick={() => patchFlower(selectedGroup, selectedFlower, { zIndex: Math.min(100, (currentFlower.zIndex ?? 10) + 1) })}
+                  className="w-7 h-7 flex items-center justify-center border border-slate-200 rounded-md hover:bg-slate-100 text-slate-600 text-sm font-medium"
+                >
+                  +
+                </button>
               </div>
             </div>
 
@@ -704,7 +702,7 @@ export default function DesignEditor() {
               setGroups(
                 initialGroups.map((g) => ({
                   ...g,
-                  flowers: g.flowers.map((f) => ({ ...f })),
+                  flowers: g.flowers.map((f) => ({ ...f, zIndex: f.zIndex ?? 10 })),
                 }))
               );
               setSelectedGroup(0);

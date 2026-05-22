@@ -9,7 +9,7 @@ export default function SuccessPage() {
   const [vwScale, setVwScale] = useState(1);
 
   useEffect(() => {
-    const update = () => setVwScale(window.innerWidth / REF_W);
+    const update = () => setVwScale(Math.max(0.5, window.innerWidth / REF_W));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -39,7 +39,7 @@ export default function SuccessPage() {
                 style={{
                   left: f.offsetX,
                   top: f.offsetY,
-                  zIndex: f.zIndex,
+                  zIndex: f.zIndex ?? 10,
                   transform: `translate(${tx}%, ${ty}%) rotate(${f.rotation}deg) scale(${f.scale / 100})`,
                   transformOrigin: f.origin,
                 }}

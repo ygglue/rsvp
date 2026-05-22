@@ -40,6 +40,11 @@ export async function submitRsvp(data: { name: string; email: string }): Promise
 export async function saveFlowersAction(data: GroupConfig[]) {
   const filePath = path.join(process.cwd(), "src/data/flowers.ts");
 
+  const normalized = data.map((g) => ({
+    ...g,
+    flowers: g.flowers.map((f) => ({ ...f, zIndex: f.zIndex ?? 10 })),
+  }));
+
   const fileContent = `export const REF_W = 1920;
 export const REF_H = 1080;
 
@@ -50,7 +55,7 @@ export interface FlowerConfig {
   offsetY: number;
   rotation: number;
   scale: number;
-  zIndex: number;
+  zIndex?: number;
 }
 
 export interface GroupConfig {
@@ -69,7 +74,7 @@ export function originTranslate(origin: string) {
   return { tx, ty };
 }
 
-export const groups: GroupConfig[] = ${JSON.stringify(data, null, 2)};
+export const groups: GroupConfig[] = ${JSON.stringify(normalized, null, 2)};
 `;
 
   try {

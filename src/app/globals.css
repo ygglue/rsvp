@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+body {
+  background-image: url('/images/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Georgia', serif;
+  color: #334155;
+}
+
+@media (orientation: landscape) {
+  body {
+    background-image: url('/images/bg.png'); /* Swap to a landscape-specific bg if available */
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    background-image: url('/images/bg.png'); /* Swap to a portrait-specific bg if available */
+  }
+}
