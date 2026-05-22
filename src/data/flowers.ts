@@ -33,16 +33,16 @@ export const groups: GroupConfig[] = [
     "anchorY": 0,
     "flowers": [
       {
-        "path": "/images/flower 1.png",
-        "origin": "center",
-        "offsetX": -299,
-        "offsetY": 245,
-        "rotation": 177.9294735149913,
+        "path": "/images/flower 1.webp",
+        "origin": "bottom left",
+        "offsetX": 100,
+        "offsetY": -16,
+        "rotation": 179.72497658008842,
         "scale": 165,
         "zIndex": 10
       },
       {
-        "path": "/images/flower 2.png",
+        "path": "/images/flower 2.webp",
         "origin": "top right",
         "offsetX": -865,
         "offsetY": -111,
@@ -51,7 +51,7 @@ export const groups: GroupConfig[] = [
         "zIndex": 10
       },
       {
-        "path": "/images/flower 3.png",
+        "path": "/images/flower 3.webp",
         "origin": "bottom left",
         "offsetX": 295,
         "offsetY": 275,
@@ -66,7 +66,7 @@ export const groups: GroupConfig[] = [
     "anchorY": 100,
     "flowers": [
       {
-        "path": "/images/flower 1.png",
+        "path": "/images/flower 1.webp",
         "origin": "bottom left",
         "offsetX": -12,
         "offsetY": 2,
@@ -75,7 +75,7 @@ export const groups: GroupConfig[] = [
         "zIndex": 10
       },
       {
-        "path": "/images/flower 2.png",
+        "path": "/images/flower 2.webp",
         "origin": "bottom left",
         "offsetX": 115,
         "offsetY": 62,
@@ -84,7 +84,7 @@ export const groups: GroupConfig[] = [
         "zIndex": 10
       },
       {
-        "path": "/images/flower 3.png",
+        "path": "/images/flower 3.webp",
         "origin": "bottom left",
         "offsetX": -212,
         "offsetY": -282,

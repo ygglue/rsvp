@@ -9,7 +9,7 @@ export default function SuccessPage() {
   const [vwScale, setVwScale] = useState(1);
 
   useEffect(() => {
-    const update = () => setVwScale(Math.max(0.5, window.innerWidth / REF_W));
+    const update = () => setVwScale(Math.max(0.4, window.innerWidth / REF_W));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -32,6 +32,9 @@ export default function SuccessPage() {
         >
           {g.flowers.map((f, fi) => {
             const { tx, ty } = originTranslate(f.origin);
+            const swayDegree = ((gi * 7 + fi * 13) % 20 + 30) / 10;
+            const swayDuration = ((gi * 5 + fi * 11) % 20 + 40) / 10;
+            const swayDelay = (((gi * 3 + fi * 7) % 30) * -1) / 10;
             return (
               <div
                 key={fi}
@@ -40,11 +43,26 @@ export default function SuccessPage() {
                   left: f.offsetX,
                   top: f.offsetY,
                   zIndex: f.zIndex ?? 10,
-                  transform: `translate(${tx}%, ${ty}%) rotate(${f.rotation}deg) scale(${f.scale / 100})`,
-                  transformOrigin: f.origin,
                 }}
               >
-                <Image src={f.path} alt="" width={400} height={400} priority loading="eager" />
+                <div
+                  className="flower-sway"
+                  style={{
+                    "--sway-degree": `${swayDegree}deg`,
+                    "--sway-duration": `${swayDuration}s`,
+                    "--sway-delay": `${swayDelay}s`,
+                    transformOrigin: f.origin,
+                  } as React.CSSProperties}
+                >
+                  <div
+                    style={{
+                      transform: `translate(${tx}%, ${ty}%) rotate(${f.rotation}deg) scale(${f.scale / 100})`,
+                      transformOrigin: f.origin,
+                    }}
+                  >
+                    <Image src={f.path} alt="" width={400} height={400} priority loading="eager" />
+                  </div>
+                </div>
               </div>
             );
           })}

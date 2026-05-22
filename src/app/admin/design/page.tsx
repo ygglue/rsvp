@@ -57,7 +57,7 @@ export default function DesignEditor() {
   }, [router]);
 
   useEffect(() => {
-    const update = () => setVwScale(Math.max(0.5, window.innerWidth / REF_W));
+    const update = () => setVwScale(Math.max(0.4, window.innerWidth / REF_W));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -91,7 +91,7 @@ export default function DesignEditor() {
     const handleMouseMove = (e: MouseEvent) => {
       if (resizeRef.current) {
         const r = resizeRef.current;
-        const vwScale = Math.max(0.5, window.innerWidth / REF_W);
+        const vwScale = Math.max(0.4, window.innerWidth / REF_W);
         const dx = (e.clientX - r.startX) / vwScale;
         const dy = (e.clientY - r.startY) / vwScale;
         const delta = Math.round(Math.max(dx, dy) / 3);
@@ -129,7 +129,7 @@ export default function DesignEditor() {
             anchorY: round1(ay),
           });
         } else {
-          const vwScale = Math.max(0.5, window.innerWidth / REF_W);
+          const vwScale = Math.max(0.4, window.innerWidth / REF_W);
           patchFlower(d.gIdx, d.fIdx, {
             offsetX: Math.round(d.startOffsetX + dx / vwScale),
             offsetY: Math.round(d.startOffsetY + dy / vwScale),
@@ -272,7 +272,7 @@ export default function DesignEditor() {
         anchorY: 50,
         flowers: [
           {
-            path: "/images/flower 1.png",
+            path: "/images/flower 1.webp",
             origin: "center",
             offsetX: 0,
             offsetY: 0,
@@ -300,7 +300,7 @@ export default function DesignEditor() {
     setGroups((prev) => {
       const next = prev.map((g) => ({ ...g, flowers: g.flowers.map((f) => ({ ...f })) }));
       next[gIdx].flowers.push({
-        path: "/images/flower 1.png",
+        path: "/images/flower 1.webp",
         origin: "center",
         offsetX: 0,
         offsetY: -120,
