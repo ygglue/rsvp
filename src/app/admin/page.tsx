@@ -71,33 +71,47 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen bg-gray-50 p-4 sm:p-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">RSVPs</h1>
 
         {rsvps.length === 0 ? (
           <p className="text-gray-600">No RSVPs yet.</p>
         ) : (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="text-left px-4 py-2 font-medium">Name</th>
-                  <th className="text-left px-4 py-2 font-medium">Email</th>
-                  <th className="text-left px-4 py-2 font-medium">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rsvps.map((r, i) => (
-                  <tr key={i} className="border-t">
-                    <td className="px-4 py-2">{r.name}</td>
-                    <td className="px-4 py-2">{r.email}</td>
-                    <td className="px-4 py-2">{new Date(r.createdAt).toLocaleString()}</td>
+          <>
+            <div className="sm:hidden space-y-3">
+              {rsvps.map((r, i) => (
+                <div key={i} className="bg-white rounded-lg shadow-md p-4 space-y-1">
+                  <div className="flex justify-between items-start">
+                    <span className="font-medium text-gray-900">{r.name}</span>
+                    <span className="text-xs text-gray-500 shrink-0 ml-2">{new Date(r.createdAt).toLocaleString()}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 break-all">{r.email}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden sm:block bg-white rounded-lg shadow-md overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="text-left px-4 py-2 font-medium">Name</th>
+                    <th className="text-left px-4 py-2 font-medium">Email</th>
+                    <th className="text-left px-4 py-2 font-medium">Date</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {rsvps.map((r, i) => (
+                    <tr key={i} className="border-t">
+                      <td className="px-4 py-2">{r.name}</td>
+                      <td className="px-4 py-2">{r.email}</td>
+                      <td className="px-4 py-2">{new Date(r.createdAt).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </main>

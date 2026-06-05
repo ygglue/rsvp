@@ -1,15 +1,16 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { submitRsvp, adminLogin, getRsvps } from "@/lib/actions";
 
-vi.mock("@/lib/mongodb", () => ({
-  connectToDatabase: vi.fn().mockResolvedValue(undefined),
+const mockClient = vi.hoisted(() => ({
+  execute: vi.fn().mockResolvedValue({
+    columns: [],
+    rows: [{ name: "Alice", email: "alice@test.com", created_at: new Date().toISOString() }],
+    rowsAffected: 1,
+  }),
 }));
 
-vi.mock("@/models/rsvp", () => ({
-  Rsvp: {
-    create: vi.fn().mockResolvedValue({ name: "Alice", email: "alice@test.com" }),
-    find: vi.fn().mockReturnValue({ sort: vi.fn().mockResolvedValue([{ name: "Alice", email: "alice@test.com", createdAt: new Date() }]) }),
-  },
+vi.mock("@/lib/db", () => ({
+  client: mockClient,
 }));
 
 vi.mock("@/lib/email", () => ({

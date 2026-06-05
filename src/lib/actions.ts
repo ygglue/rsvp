@@ -3,14 +3,12 @@
 import fs from "fs";
 import path from "path";
 import { cookies } from "next/headers";
-import { connectToDatabase } from "@/lib/mongodb";
-import { Rsvp } from "@/models/rsvp";
+import { client } from "@/lib/db";
 import { validateEmail, validateName } from "@/lib/validation";
 import { sendConfirmationEmail } from "@/lib/email";
 import { GroupConfig } from "@/data/flowers";
 
 export async function submitRsvp(data: { name: string; email: string }): Promise<{ success: boolean; error?: string }> {
-// ... existing submitRsvp implementation (omitted for brevity, assume it remains unchanged) ...
   const nameResult = validateName(data.name);
   if (!nameResult.valid) {
     return { success: false, error: nameResult.error };
@@ -22,8 +20,10 @@ export async function submitRsvp(data: { name: string; email: string }): Promise
   }
 
   try {
-    await connectToDatabase();
-    await Rsvp.create({ name: data.name.trim(), email: data.email.trim() });
+    await client.execute({
+      sql: "INSERT INTO rsvps (name, email) VALUES (?, ?)",
+      args: [data.name.trim(), data.email.trim()],
+    });
 
     const emailResp = await sendConfirmationEmail(data.name.trim(), data.email.trim());
     if (!emailResp.success) {
@@ -117,11 +117,10 @@ export async function getRsvps(): Promise<{ name: string; email: string; created
     throw new Error("Unauthorized");
   }
 
-  await connectToDatabase();
-  const rsvps = await Rsvp.find().sort({ createdAt: -1 });
-  return rsvps.map((r) => ({
-    name: r.name,
-    email: r.email,
-    createdAt: r.createdAt,
+  const result = await client.execute("SELECT name, email, created_at FROM rsvps ORDER BY created_at DESC");
+  return result.rows.map((r) => ({
+    name: r.name as string,
+    email: r.email as string,
+    createdAt: new Date(r.created_at as string),
   }));
 }
