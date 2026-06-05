@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { visualConfig } from "@/data/flowers";
 
 interface Leaf {
   x: number;
@@ -18,7 +19,6 @@ interface Leaf {
 
 const MAX_LEAVES = 40;
 const SPAWN_INTERVAL = 400;
-const LEAF_COLOR = "#2e558e";
 
 function drawLeaf(ctx: CanvasRenderingContext2D, s: number) {
   ctx.beginPath();
@@ -30,6 +30,7 @@ function drawLeaf(ctx: CanvasRenderingContext2D, s: number) {
 
 export default function FallingLeaves() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const leafColor = visualConfig.leafColor;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -100,7 +101,7 @@ export default function FallingLeaves() {
         ctx!.translate(l.x, l.y);
         ctx!.rotate(l.rotation);
         ctx!.globalAlpha = l.opacity;
-        ctx!.fillStyle = LEAF_COLOR;
+        ctx!.fillStyle = leafColor;
         drawLeaf(ctx!, l.size);
         ctx!.restore();
       }
@@ -114,7 +115,7 @@ export default function FallingLeaves() {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [leafColor]);
 
   return (
     <canvas

@@ -33,7 +33,14 @@ export default function AdminPage() {
   useEffect(() => {
     if (authed) {
       getRsvps()
-        .then((data) => setRsvps(data.map((r) => ({ ...r, createdAt: r.createdAt.toString() }))))
+        .then((data) =>
+          setRsvps(
+            data.map((r) => ({
+              ...r,
+              createdAt: r.createdAt.toString(),
+            })),
+          ),
+        )
         .catch(() => setError("Failed to load RSVPs"));
     }
   }, [authed]);
@@ -41,11 +48,15 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gray-50">
-        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm space-y-4">
+        <form
+          onSubmit={handleLogin}
+          className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm space-y-4"
+        >
           <h1 className="text-2xl font-bold text-center">Admin</h1>
-
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -55,9 +66,7 @@ export default function AdminPage() {
               className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
             />
           </div>
-
           {error && <p className="text-red-600 text-sm">{error}</p>}
-
           <button
             type="submit"
             disabled={loading}
@@ -84,7 +93,9 @@ export default function AdminPage() {
                 <div key={i} className="bg-white rounded-lg shadow-md p-4 space-y-1">
                   <div className="flex justify-between items-start">
                     <span className="font-medium text-gray-900">{r.name}</span>
-                    <span className="text-xs text-gray-500 shrink-0 ml-2">{new Date(r.createdAt).toLocaleString()}</span>
+                    <span className="text-xs text-gray-500 shrink-0 ml-2">
+                      {new Date(r.createdAt).toLocaleString()}
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 break-all">{r.email}</p>
                 </div>
@@ -104,8 +115,10 @@ export default function AdminPage() {
                   {rsvps.map((r, i) => (
                     <tr key={i} className="border-t">
                       <td className="px-4 py-2">{r.name}</td>
-                      <td className="px-4 py-2">{r.email}</td>
-                      <td className="px-4 py-2">{new Date(r.createdAt).toLocaleString()}</td>
+                      <td className="px-4 py-2 break-all">{r.email}</td>
+                      <td className="px-4 py-2 text-gray-500 whitespace-nowrap">
+                        {new Date(r.createdAt).toLocaleString()}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

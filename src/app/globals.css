@@ -22,12 +22,20 @@ body {
   will-change: transform;
 }
 
-.bg-image {
-  position: fixed;
-  inset: 0;
-  background-image: url('/images/bg.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -1;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A1E3F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1A447A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2A5A96;
 }

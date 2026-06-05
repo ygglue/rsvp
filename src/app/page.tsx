@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { submitRsvp } from "@/lib/actions";
 import Image from "next/image";
-import { groups, originTranslate, REF_W } from "@/data/flowers";
+import { groups, originTranslate, visualConfig, REF_W } from "@/data/flowers";
+import CountdownTimer from "@/components/CountdownTimer";
+import ColorPalette from "@/components/ColorPalette";
 
 export default function HomePage() {
   const router = useRouter();
@@ -36,8 +38,10 @@ export default function HomePage() {
     }
   }
 
+  const flowerFilter = `hue-rotate(${visualConfig.hueRotate}deg) brightness(${visualConfig.brightness}) saturate(${visualConfig.saturate})`;
+
   return (
-    <main className="min-h-screen flex items-center justify-center relative overflow-hidden p-6">
+    <main className="min-h-screen flex items-center justify-center relative overflow-hidden p-4 sm:p-6">
       {groups.map((g, gi) => (
         <div
           key={gi}
@@ -81,7 +85,14 @@ export default function HomePage() {
                       transformOrigin: f.origin,
                     }}
                   >
-                    <Image src={f.path} alt="" width={400} height={400} priority loading="eager" />
+                    <Image
+                      src={f.path}
+                      alt=""
+                      width={400}
+                      height={400}
+                      priority={gi === 0}
+                      style={{ filter: flowerFilter }}
+                    />
                   </div>
                 </div>
               </div>
@@ -90,46 +101,102 @@ export default function HomePage() {
         </div>
       ))}
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl w-full max-w-md space-y-6 z-10 border border-white/50"
-      >
-        <h1 className="text-3xl font-serif text-slate-800 text-center italic">RSVP</h1>
+      <div className="w-full max-w-lg z-10">
+        {/* Event Card */}
+        <div className="bg-[#0A1E3F]/85 backdrop-blur-md rounded-2xl shadow-2xl border border-[#2A5A96]/40 p-6 sm:p-8 space-y-6">
+          {/* Title */}
+          <div className="text-center space-y-1">
+            <h1 className="text-3xl sm:text-4xl font-serif italic text-[#FFD700]">
+              Anne&apos;s 18th Birthday
+            </h1>
+            <div className="flex items-center justify-center gap-2 text-blue-200 text-sm">
+              <span>July 6, 2026</span>
+              <span className="text-[#1A447A]">·</span>
+              <span>6:00 PM</span>
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-slate-700">Name</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-md border-slate-300 bg-white/50 px-4 py-3 text-sm focus:border-slate-500 focus:ring-slate-500 shadow-sm"
-          />
+          {/* Venue */}
+          <div className="text-center space-y-2">
+            <p className="text-blue-100 font-medium">Villa El Dantess</p>
+            <div className="rounded-xl overflow-hidden border border-[#1A447A]/50">
+              <iframe
+                src="https://maps.google.com/maps?q=Villa+El+Dantess&output=embed"
+                width="100%"
+                height="180"
+                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <a
+              href="https://maps.app.goo.gl/WZVwoYwnvW2nuh61A"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-sm text-[#8CB4E8] hover:text-[#FFD700] transition-colors underline underline-offset-2"
+            >
+              View on Google Maps →
+            </a>
+          </div>
+
+          {/* Attire */}
+          <div className="text-center space-y-2">
+            <p className="text-sm text-blue-200 uppercase tracking-wider font-medium">
+              Attire: Dark Blue Palette
+            </p>
+            <ColorPalette />
+          </div>
+
+          {/* Countdown */}
+          <div className="text-center">
+            <CountdownTimer />
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-[#1A447A]/50" />
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-blue-200">Name</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="mt-1 block w-full rounded-lg bg-[#102F5C]/60 border border-[#1A447A] px-4 py-3 text-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-[#2A5A96] focus:border-transparent"
+                placeholder="Your full name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-blue-200">Email</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="mt-1 block w-full rounded-lg bg-[#102F5C]/60 border border-[#1A447A] px-4 py-3 text-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-[#2A5A96] focus:border-transparent"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            {error && (
+              <p className="text-rose-300 text-sm bg-rose-900/30 p-2 rounded">{error}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-[#1A447A] to-[#2A5A96] text-white py-3 px-4 rounded-lg text-sm font-medium hover:from-[#2A5A96] hover:to-[#3A6AA6] transition-all disabled:opacity-50 shadow-lg"
+            >
+              {loading ? "Submitting..." : "Submit RSVP"}
+            </button>
+          </form>
         </div>
-
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-slate-700">Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-md border-slate-300 bg-white/50 px-4 py-3 text-sm focus:border-slate-500 focus:ring-slate-500 shadow-sm"
-          />
-        </div>
-
-        {error && <p className="text-rose-600 text-sm bg-rose-50 p-2 rounded">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-slate-800 text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-slate-900 transition-colors disabled:opacity-50 shadow-md"
-        >
-          {loading ? "Submitting..." : "Submit RSVP"}
-        </button>
-      </form>
+      </div>
     </main>
   );
 }

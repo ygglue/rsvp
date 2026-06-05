@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { groups as initialGroups, originTranslate, REF_W } from "@/data/flowers";
-import type { FlowerConfig, GroupConfig } from "@/data/flowers";
+import { groups as initialGroups, originTranslate, REF_W, visualConfig as initialVisualConfig } from "@/data/flowers";
+import type { FlowerConfig, GroupConfig, VisualConfig } from "@/data/flowers";
 import { saveFlowersAction, checkAdminAuth } from "@/lib/actions";
 
 const ORIGINS = ["center", "top left", "top right", "bottom left", "bottom right"];
@@ -18,6 +18,12 @@ export default function DesignEditor() {
   const [selectedFlower, setSelectedFlower] = useState(-1);
   const [saving, setSaving] = useState(false);
   const [authed, setAuthed] = useState(false);
+  const [visualSettings, setVisualSettings] = useState<VisualConfig>(() => ({
+    hueRotate: initialVisualConfig.hueRotate,
+    brightness: initialVisualConfig.brightness,
+    saturate: initialVisualConfig.saturate,
+    leafColor: initialVisualConfig.leafColor,
+  }));
   const [vwScale, setVwScale] = useState(1);
 
   const dragRef = useRef<{
@@ -326,7 +332,7 @@ export default function DesignEditor() {
 
   const handleSave = async () => {
     setSaving(true);
-    const result = await saveFlowersAction(groups);
+    const result = await saveFlowersAction(groups, visualSettings);
     if (result.success) alert("Design saved!");
     else alert("Error: " + result.error);
     setSaving(false);
@@ -405,6 +411,9 @@ export default function DesignEditor() {
                       height={400}
                       draggable={false}
                       priority
+                      style={{
+                        filter: `hue-rotate(${visualSettings.hueRotate}deg) brightness(${visualSettings.brightness}) saturate(${visualSettings.saturate})`,
+                      }}
                     />
 
                     {isFlowerSelected && (
@@ -688,6 +697,76 @@ export default function DesignEditor() {
           </div>
         )}
 
+        {/* Visual Settings */}
+        <div className="border-t border-slate-100 pt-3 mt-2">
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 block">
+            Visual Settings
+          </span>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div>
+              <label className="block text-xs text-slate-500 mb-0.5">
+                Flower Hue: {visualSettings.hueRotate}°
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="360"
+                className="w-full h-1.5 accent-slate-800"
+                value={visualSettings.hueRotate}
+                onChange={(e) =>
+                  setVisualSettings((prev) => ({ ...prev, hueRotate: Number(e.target.value) }))
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-0.5">
+                Flower Brightness: {visualSettings.brightness.toFixed(2)}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                className="w-full h-1.5 accent-slate-800"
+                value={visualSettings.brightness}
+                onChange={(e) =>
+                  setVisualSettings((prev) => ({ ...prev, brightness: Number(e.target.value) }))
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-0.5">
+                Flower Saturation: {visualSettings.saturate.toFixed(2)}
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                className="w-full h-1.5 accent-slate-800"
+                value={visualSettings.saturate}
+                onChange={(e) =>
+                  setVisualSettings((prev) => ({ ...prev, saturate: Number(e.target.value) }))
+                }
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-0.5">Leaf Color</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={visualSettings.leafColor}
+                  onChange={(e) =>
+                    setVisualSettings((prev) => ({ ...prev, leafColor: e.target.value }))
+                  }
+                  className="w-10 h-8 rounded border border-slate-200 cursor-pointer"
+                />
+                <span className="text-xs font-mono text-slate-600">{visualSettings.leafColor}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Actions */}
         <div className="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100">
           <button
@@ -707,6 +786,12 @@ export default function DesignEditor() {
               );
               setSelectedGroup(0);
               setSelectedFlower(-1);
+              setVisualSettings({
+                hueRotate: initialVisualConfig.hueRotate,
+                brightness: initialVisualConfig.brightness,
+                saturate: initialVisualConfig.saturate,
+                leafColor: initialVisualConfig.leafColor,
+              });
             }}
             className="px-4 py-2.5 border border-slate-300 rounded-lg text-sm text-slate-600 hover:bg-slate-100 transition-colors"
           >

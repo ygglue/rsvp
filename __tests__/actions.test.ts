@@ -33,6 +33,12 @@ vi.mock("next/headers", () => ({
     get: vi.fn().mockReturnValue({ value: "true" }),
     delete: vi.fn(),
   }),
+  headers: vi.fn().mockResolvedValue({
+    get: vi.fn((key: string) => {
+      if (key === "host") return "example.com";
+      return null;
+    }),
+  }),
 }));
 
 describe("submitRsvp", () => {

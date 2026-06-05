@@ -2,13 +2,16 @@
 
 import fs from "fs";
 import path from "path";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { client } from "@/lib/db";
 import { validateEmail, validateName } from "@/lib/validation";
 import { sendConfirmationEmail } from "@/lib/email";
-import { GroupConfig } from "@/data/flowers";
+import { GroupConfig, VisualConfig } from "@/data/flowers";
 
-export async function submitRsvp(data: { name: string; email: string }): Promise<{ success: boolean; error?: string }> {
+export async function submitRsvp(data: {
+  name: string;
+  email: string;
+}): Promise<{ success: boolean; error?: string }> {
   const nameResult = validateName(data.name);
   if (!nameResult.valid) {
     return { success: false, error: nameResult.error };
@@ -25,7 +28,16 @@ export async function submitRsvp(data: { name: string; email: string }): Promise
       args: [data.name.trim(), data.email.trim()],
     });
 
-    const emailResp = await sendConfirmationEmail(data.name.trim(), data.email.trim());
+    const h = await headers();
+    const proto = h.get("x-forwarded-proto") || "https";
+    const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
+    const baseUrl = `${proto}://${host}`;
+
+    const emailResp = await sendConfirmationEmail(
+      data.name.trim(),
+      data.email.trim(),
+      baseUrl,
+    );
     if (!emailResp.success) {
       console.error("Failed to send confirmation email:", emailResp.error);
     }
@@ -37,7 +49,7 @@ export async function submitRsvp(data: { name: string; email: string }): Promise
   }
 }
 
-export async function saveFlowersAction(data: GroupConfig[]) {
+export async function saveFlowersAction(data: GroupConfig[], visualData: VisualConfig) {
   const filePath = path.join(process.cwd(), "src/data/flowers.ts");
 
   const normalized = data.map((g) => ({
@@ -64,8 +76,15 @@ export interface GroupConfig {
   flowers: FlowerConfig[];
 }
 
+export interface VisualConfig {
+  hueRotate: number;
+  brightness: number;
+  saturate: number;
+  leafColor: string;
+}
+
 export function originTranslate(origin: string) {
-  const parts = origin.toLowerCase().split(/\\s+/);
+  const parts = origin.toLowerCase().split(/\\\\s+/);
   let tx = -50, ty = -50;
   if (parts.includes("left")) tx = 0;
   else if (parts.includes("right")) tx = -100;
@@ -73,6 +92,8 @@ export function originTranslate(origin: string) {
   else if (parts.includes("bottom")) ty = -100;
   return { tx, ty };
 }
+
+export const visualConfig: VisualConfig = ${JSON.stringify(visualData, null, 2)};
 
 export const groups: GroupConfig[] = ${JSON.stringify(normalized, null, 2)};
 `;
@@ -109,7 +130,9 @@ export async function adminLogin(password: string): Promise<boolean> {
   return true;
 }
 
-export async function getRsvps(): Promise<{ name: string; email: string; createdAt: Date }[]> {
+export async function getRsvps(): Promise<
+  { name: string; email: string; createdAt: Date }[]
+> {
   const cookieStore = await cookies();
   const authed = cookieStore.get("admin_authed");
 
@@ -117,7 +140,9 @@ export async function getRsvps(): Promise<{ name: string; email: string; created
     throw new Error("Unauthorized");
   }
 
-  const result = await client.execute("SELECT name, email, created_at FROM rsvps ORDER BY created_at DESC");
+  const result = await client.execute(
+    "SELECT name, email, created_at FROM rsvps ORDER BY created_at DESC",
+  );
   return result.rows.map((r) => ({
     name: r.name as string,
     email: r.email as string,
