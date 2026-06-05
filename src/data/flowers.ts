@@ -36,7 +36,7 @@ export function originTranslate(origin: string) {
 
 export const visualConfig: VisualConfig = {
   "hueRotate": 360,
-  "brightness": 0.5,
+  "brightness": 0.65,
   "saturate": 1,
   "leafColor": "#1A447A"
 };
@@ -52,14 +52,14 @@ export const groups: GroupConfig[] = [
         "offsetX": 313,
         "offsetY": -219,
         "rotation": 179.72497658008842,
-        "scale": 165,
+        "scale": 124,
         "zIndex": 10
       },
       {
         "path": "/images/flower 2.webp",
         "origin": "top right",
-        "offsetX": -944,
-        "offsetY": 64,
+        "offsetX": -843,
+        "offsetY": -48,
         "rotation": 255.21985466016645,
         "scale": 120,
         "zIndex": 10
@@ -67,10 +67,10 @@ export const groups: GroupConfig[] = [
       {
         "path": "/images/flower 3.webp",
         "origin": "bottom left",
-        "offsetX": 531,
-        "offsetY": -17,
+        "offsetX": 581,
+        "offsetY": -30,
         "rotation": 202.6485845640293,
-        "scale": 135,
+        "scale": 113,
         "zIndex": 9
       }
     ]

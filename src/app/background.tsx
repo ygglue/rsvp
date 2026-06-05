@@ -192,7 +192,8 @@ export default function Background() {
 
       starScale = Math.max(1.0, 1920 / window.innerWidth);
       const aspect = window.innerWidth / window.innerHeight;
-      densityScale = Math.sqrt(aspect);
+      const mobileFactor = Math.min(1.0, window.innerWidth / 400);
+      densityScale = Math.sqrt(aspect) * mobileFactor;
 
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     }
@@ -207,8 +208,8 @@ export default function Background() {
       use(sceneProg);
       unif2f(sceneProg, "u_resolution", w, h);
       unif1f(sceneProg, "u_time", time * 0.001);
-      unif1f(sceneProg, "u_starDensity", 1.0 * densityScale);
-      unif1f(sceneProg, "u_starSize", 10.0 * starScale);
+      unif1f(sceneProg, "u_starDensity", 0.6 * densityScale);
+      unif1f(sceneProg, "u_starSize", 6.0 * starScale);
       quad();
 
       // Pass 2: Bright extract
@@ -259,7 +260,7 @@ export default function Background() {
       use(compositeProg);
       bindTex(compositeProg, "u_scene", 0, texScene);
       bindTex(compositeProg, "u_bloom", 1, texBloom);
-      unif1f(compositeProg, "u_intensity", 1.5);
+      unif1f(compositeProg, "u_intensity", 1.5 / Math.sqrt(starScale));
       quad();
 
       raf = requestAnimationFrame(loop);

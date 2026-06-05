@@ -1,10 +1,31 @@
 @import "tailwindcss";
 
-body {
-  font-family: 'Georgia', serif;
-  color: #334155;
+:root {
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", Helvetica, Arial, sans-serif;
+  --navy: #0A1E3F;
+  --navy-light: #102F5C;
+  --blue: #1A447A;
+  --blue-light: #2A5A96;
+  --gold: #FFD700;
+  --blue-white: #E8F0FF;
+  --blue-muted: #8CB4E8;
 }
 
+body {
+  font-family: var(--font-body);
+  color: var(--blue-white);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Sway animation for flowers */
 @keyframes sway {
   0%, 100% { transform: rotate(0deg); }
   33%      { transform: rotate(var(--sway-degree, 5deg)); }
@@ -22,6 +43,76 @@ body {
   will-change: transform;
 }
 
+/* Staggered fade-up */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-1 { animation: fadeUp 0.8s ease-out both; }
+.stagger-2 { animation: fadeUp 0.8s ease-out 0.12s both; }
+.stagger-3 { animation: fadeUp 0.8s ease-out 0.24s both; }
+.stagger-4 { animation: fadeUp 0.8s ease-out 0.36s both; }
+.stagger-5 { animation: fadeUp 0.8s ease-out 0.48s both; }
+.stagger-6 { animation: fadeUp 0.8s ease-out 0.6s both; }
+.stagger-7 { animation: fadeUp 0.8s ease-out 0.72s both; }
+
+/* Button shimmer */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.btn-shimmer {
+  background: linear-gradient(135deg, #1A447A 0%, #2A5A96 50%, #1A447A 100%);
+  background-size: 200% 200%;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* Input glow on focus */
+.input-glow:focus {
+  box-shadow: 0 0 0 1px rgba(42, 90, 150, 0.6), 0 0 24px rgba(42, 90, 150, 0.25);
+}
+
+/* Gold pulse for countdown */
+@keyframes goldPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.gold-pulse {
+  animation: goldPulse 3s ease-in-out infinite;
+}
+
+/* Sheen animation */
+@keyframes sheen {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.sheen-text {
+  background: linear-gradient(90deg, #996515 0%, #B8860B 20%, #D4AF37 40%, #FFCC00 50%, #D4AF37 60%, #B8860B 80%, #996515 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: sheen 4s linear infinite;
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

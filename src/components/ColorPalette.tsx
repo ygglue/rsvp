@@ -7,14 +7,16 @@ const COLORS = [
 
 export default function ColorPalette() {
   return (
-    <div className="flex gap-3 justify-center">
+    <div className="flex gap-3 sm:gap-4">
       {COLORS.map((c) => (
-        <div key={c.hex} className="flex flex-col items-center gap-1">
+        <div key={c.hex} className="group flex flex-col items-center gap-1.5">
           <div
-            className="w-10 h-10 rounded-full border-2 border-white/20 shadow-lg"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white/10 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:border-white/30 group-hover:shadow-xl"
             style={{ backgroundColor: c.hex }}
           />
-          <span className="text-[10px] text-blue-200 font-mono">{c.hex}</span>
+          <span className="text-[10px] text-[#8CB4E8] font-mono opacity-70 group-hover:opacity-100 transition-opacity">
+            {c.hex}
+          </span>
         </div>
       ))}
     </div>

@@ -79,15 +79,15 @@ vec3 starField(vec2 uv, float time, float aspect, float dustNoise, float band) {
     brightness *= max(0.15, dust);
 
     vec3 starColor = mix(
-      vec3(1.0, 0.95, 0.86),
-      vec3(1.0, 0.82, 0.58),
+      vec3(0.85, 0.9, 1.0),
+      vec3(0.7, 0.8, 1.0),
       prob * 0.4
     );
     color += starColor * star * twinkle * brightness;
 
     if (size > 0.4) {
-      float glow = smoothstep(visualSize * 4.0, 0.0, dist);
-      color += vec3(1.0, 0.85, 0.6) * glow * twinkle * brightness * 0.25;
+      float glow = smoothstep(visualSize * 2.5, 0.0, dist);
+      color += vec3(0.75, 0.85, 1.0) * glow * twinkle * brightness * 0.25;
     }
   }
 
@@ -97,7 +97,7 @@ vec3 starField(vec2 uv, float time, float aspect, float dustNoise, float band) {
 void main() {
   vec2 uv = v_uv;
 
-  vec3 color = vec3(0.005, 0.003, 0.01);
+  vec3 color = vec3(0.02, 0.05, 0.12);
 
   float band = smoothstep(0.6, 0.0, abs(uv.x * 0.6 + uv.y * 0.8 - 0.5));
 
@@ -105,25 +105,25 @@ void main() {
   float n2 = fbm(uv * 2.5 - vec2(0.4, 0.6) + u_time * 0.008);
   float n3 = fbm(uv * 1.8 + vec2(0.2, 0.8) + u_time * 0.006);
 
-  vec3 blue = vec3(0.06, 0.1, 0.22);
-  vec3 purple = vec3(0.12, 0.06, 0.2);
-  vec3 pink = vec3(0.18, 0.08, 0.14);
-  vec3 warm = vec3(0.16, 0.12, 0.08);
+  vec3 n1col = vec3(0.03, 0.06, 0.13);
+  vec3 n2col = vec3(0.04, 0.08, 0.16);
+  vec3 n3col = vec3(0.02, 0.03, 0.07);
+  vec3 n4col = vec3(0.03, 0.05, 0.1);
 
   vec3 nebula = vec3(0.0);
-  nebula += blue * n1 * 0.5;
-  nebula += purple * n2 * 0.35;
-  nebula += pink * n3 * 0.25;
-  nebula += warm * n1 * n2 * 0.15;
+  nebula += n1col * n1 * 0.5;
+  nebula += n2col * n2 * 0.35;
+  nebula += n3col * n3 * 0.25;
+  nebula += n4col * n1 * n2 * 0.15;
   nebula *= band * 1.2;
 
   color += nebula;
 
   float clouds = fbm(uv * 0.8 + u_time * 0.005);
-  color += vec3(0.03, 0.02, 0.06) * clouds * 0.4 * band;
+  color += vec3(0.03, 0.08, 0.18) * clouds * 0.4 * band;
 
   float clouds2 = fbm(uv * 1.2 - u_time * 0.003 + vec2(1.5, 1.2));
-  color += vec3(0.04, 0.03, 0.07) * clouds2 * 0.2;
+  color += vec3(0.04, 0.1, 0.2) * clouds2 * 0.2;
 
   float aspect = u_resolution.x / u_resolution.y;
   float dustNoise = fbm(uv * 2.0 + vec2(0.3, 0.7) + u_time * 0.002) * 0.7

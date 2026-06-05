@@ -41,11 +41,12 @@ export default function HomePage() {
   const flowerFilter = `hue-rotate(${visualConfig.hueRotate}deg) brightness(${visualConfig.brightness}) saturate(${visualConfig.saturate})`;
 
   return (
-    <main className="min-h-screen flex items-center justify-center relative overflow-hidden p-4 sm:p-6">
+    <main className="min-h-screen flex items-center justify-center relative overflow-hidden p-6 lg:p-12 py-30 lg:py-30">
+      {/* Flower decorations */}
       {groups.map((g, gi) => (
         <div
           key={gi}
-          className="fixed pointer-events-none z-0 opacity-90"
+          className="fixed pointer-events-none z-0"
           style={{
             left: `${g.anchorX}%`,
             top: `${g.anchorY}%`,
@@ -57,8 +58,8 @@ export default function HomePage() {
         >
           {g.flowers.map((f, fi) => {
             const { tx, ty } = originTranslate(f.origin);
-            const swayDegree = ((gi * 7 + fi * 13) % 20 + 30) / 10;
-            const swayDuration = ((gi * 5 + fi * 11) % 20 + 40) / 10;
+            const swayDegree = (((gi * 7 + fi * 13) % 20) + 30) / 10;
+            const swayDuration = (((gi * 5 + fi * 11) % 20) + 40) / 10;
             const swayDelay = (((gi * 3 + fi * 7) % 30) * -1) / 10;
             return (
               <div
@@ -72,12 +73,14 @@ export default function HomePage() {
               >
                 <div
                   className="flower-sway"
-                  style={{
-                    "--sway-degree": `${swayDegree}deg`,
-                    "--sway-duration": `${swayDuration}s`,
-                    "--sway-delay": `${swayDelay}s`,
-                    transformOrigin: f.origin,
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      "--sway-degree": `${swayDegree}deg`,
+                      "--sway-duration": `${swayDuration}s`,
+                      "--sway-delay": `${swayDelay}s`,
+                      transformOrigin: f.origin,
+                    } as React.CSSProperties
+                  }
                 >
                   <div
                     style={{
@@ -101,100 +104,126 @@ export default function HomePage() {
         </div>
       ))}
 
-      <div className="w-full max-w-lg z-10">
-        {/* Event Card */}
-        <div className="bg-[#0A1E3F]/85 backdrop-blur-md rounded-2xl shadow-2xl border border-[#2A5A96]/40 p-6 sm:p-8 space-y-6">
-          {/* Title */}
-          <div className="text-center space-y-1">
-            <h1 className="text-3xl sm:text-4xl font-serif italic text-[#FFD700]">
-              Anne&apos;s 18th Birthday
-            </h1>
-            <div className="flex items-center justify-center gap-2 text-blue-200 text-sm">
-              <span>July 6, 2026</span>
-              <span className="text-[#1A447A]">·</span>
-              <span>6:00 PM</span>
-            </div>
+      {/* Content Grid */}
+      <div className="relative -z-10 w-full max-w-5xl grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-16 items-start">
+        {/* Left: Event Info */}
+        <div className="space-y-10 lg:space-y-12 pt-4 lg:pt-12">
+          <div className="stagger-1">
+            <CountdownTimer />
           </div>
 
-          {/* Venue */}
-          <div className="text-center space-y-2">
-            <p className="text-blue-100 font-medium">Villa El Dantess</p>
-            <div className="rounded-xl overflow-hidden border border-[#1A447A]/50">
+          <div className="stagger-2 space-y-3">
+            <p className="text-[#8CB4E8] text-xs uppercase tracking-[0.2em] font-medium">
+              Date &amp; Time
+            </p>
+            <p className="text-[#E8F0FF] text-xl sm:text-2xl font-display">
+              July 6, 2026
+            </p>
+            <p className="text-[#B0C8E8] text-base">6:00 PM &middot; Evening</p>
+          </div>
+
+          <div className="stagger-3 space-y-3">
+            <p className="text-[#8CB4E8] text-xs uppercase tracking-[0.2em] font-medium">
+              Venue
+            </p>
+            <p className="text-[#E8F0FF] text-xl sm:text-2xl font-display">
+              Villa El Dantess
+            </p>
+            <div className="rounded-xl overflow-hidden border border-[#1A447A]/40 mt-3">
               <iframe
                 src="https://maps.google.com/maps?q=Villa+El+Dantess&output=embed"
                 width="100%"
-                height="180"
+                height="160"
                 style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
                 allowFullScreen
                 loading="lazy"
               />
             </div>
-            <a
-              href="https://maps.app.goo.gl/WZVwoYwnvW2nuh61A"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-sm text-[#8CB4E8] hover:text-[#FFD700] transition-colors underline underline-offset-2"
-            >
-              View on Google Maps →
-            </a>
           </div>
 
-          {/* Attire */}
-          <div className="text-center space-y-2">
-            <p className="text-sm text-blue-200 uppercase tracking-wider font-medium">
-              Attire: Dark Blue Palette
+          <div className="stagger-4 space-y-4">
+            <p className="text-[#8CB4E8] text-xs uppercase tracking-[0.2em] font-medium">
+              Attire
+            </p>
+            <p className="text-[#E8F0FF] text-lg font-display">
+              Dark Blue Palette
             </p>
             <ColorPalette />
           </div>
+        </div>
 
-          {/* Countdown */}
-          <div className="text-center">
-            <CountdownTimer />
+        {/* Right: RSVP Form */}
+        <div className="stagger-3 lg:stagger-6 lg:pt-8">
+          <div className="relative bg-[#102F5C]/40 backdrop-blur-md rounded-2xl border border-[#1A447A]/30 p-6 sm:p-8 shadow-2xl overflow-hidden">
+            {/* Gradient mesh overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `
+                  radial-gradient(circle at 30% 20%, rgba(42, 90, 150, 0.12), transparent 60%),
+                  radial-gradient(circle at 70% 80%, rgba(26, 68, 122, 0.08), transparent 50%)
+                `,
+              }}
+            />
+
+            <div className="relative">
+              <h2 className="font-display text-2xl sm:text-3xl italic text-[#FFD700] mb-8">
+                RSVP
+              </h2>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-xs text-[#8CB4E8] uppercase tracking-[0.15em] mb-1.5 font-medium"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="input-glow mt-1 block w-full rounded-xl bg-[#0A1E3F]/60 border border-[#1A447A]/50 px-4 py-3 text-sm text-[#E8F0FF] placeholder-[#5A7AAC] transition-all duration-300 focus:outline-none focus:border-[#2A5A96]"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-xs text-[#8CB4E8] uppercase tracking-[0.15em] mb-1.5 font-medium"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="input-glow mt-1 block w-full rounded-xl bg-[#0A1E3F]/60 border border-[#1A447A]/50 px-4 py-3 text-sm text-[#E8F0FF] placeholder-[#5A7AAC] transition-all duration-300 focus:outline-none focus:border-[#2A5A96]"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                {error && (
+                  <p className="text-rose-300 text-sm bg-rose-900/20 border border-rose-800/30 rounded-lg px-3 py-2">
+                    {error}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-shimmer w-full text-white py-3.5 px-4 rounded-xl text-sm font-medium transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-[#2A5A96]/25 hover:shadow-xl active:scale-[0.98]"
+                >
+                  {loading ? "Submitting..." : "Submit RSVP"}
+                </button>
+              </form>
+            </div>
           </div>
-
-          {/* Divider */}
-          <div className="border-t border-[#1A447A]/50" />
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-blue-200">Name</label>
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="mt-1 block w-full rounded-lg bg-[#102F5C]/60 border border-[#1A447A] px-4 py-3 text-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-[#2A5A96] focus:border-transparent"
-                placeholder="Your full name"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-blue-200">Email</label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="mt-1 block w-full rounded-lg bg-[#102F5C]/60 border border-[#1A447A] px-4 py-3 text-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-[#2A5A96] focus:border-transparent"
-                placeholder="your@email.com"
-              />
-            </div>
-
-            {error && (
-              <p className="text-rose-300 text-sm bg-rose-900/30 p-2 rounded">{error}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-[#1A447A] to-[#2A5A96] text-white py-3 px-4 rounded-lg text-sm font-medium hover:from-[#2A5A96] hover:to-[#3A6AA6] transition-all disabled:opacity-50 shadow-lg"
-            >
-              {loading ? "Submitting..." : "Submit RSVP"}
-            </button>
-          </form>
         </div>
       </div>
     </main>
