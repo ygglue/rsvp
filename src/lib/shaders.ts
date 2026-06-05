@@ -119,11 +119,14 @@ void main() {
 
   color += nebula;
 
-  float clouds = fbm(uv * 0.8 + u_time * 0.005);
-  color += vec3(0.03, 0.08, 0.18) * clouds * 0.4 * band;
+  float clouds1 = fbm(uv * 0.3 + u_time * 0.008 + vec2(0.3, 0.8));
+  color += vec3(0.02, 0.04, 0.08) * clouds1 * 0.3;
 
-  float clouds2 = fbm(uv * 1.2 - u_time * 0.003 + vec2(1.5, 1.2));
-  color += vec3(0.04, 0.1, 0.2) * clouds2 * 0.2;
+  float clouds2 = pow(fbm(uv * 0.7 - u_time * 0.012 + vec2(1.5, 1.2)), 1.5);
+  color += vec3(0.025, 0.05, 0.1) * clouds2 * 0.2;
+
+  float clouds3 = pow(fbm(uv * 1.5 + u_time * 0.02 + vec2(0.3, 0.8)), 2.5);
+  color += vec3(0.03, 0.06, 0.12) * clouds3 * 0.15;
 
   float aspect = u_resolution.x / u_resolution.y;
   float dustNoise = fbm(uv * 2.0 + vec2(0.3, 0.7) + u_time * 0.002) * 0.7

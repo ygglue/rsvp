@@ -1,25 +1,17 @@
 import { createClient } from "@libsql/client";
 
-const dbMode = process.env.DB_MODE;
+const url = process.env.TURSO_URL;
+const authToken = process.env.TURSO_AUTH_TOKEN;
 
-if (!dbMode || dbMode === "remote") {
-  const url = process.env.TURSO_URL;
-  const authToken = process.env.TURSO_AUTH_TOKEN;
-
-  if (!url) {
-    throw new Error("Please define TURSO_URL in .env.local for remote mode");
-  }
-
-  if (!authToken) {
-    throw new Error("Please define TURSO_AUTH_TOKEN in .env.local for remote mode");
-  }
-
-  var client = createClient({ url, authToken });
-} else if (dbMode === "local") {
-  var client = createClient({ url: "file:./local.db" });
-} else {
-  throw new Error(`Unknown DB_MODE: ${dbMode}. Use 'local' or 'remote'`);
+if (!url) {
+  throw new Error("Please define TURSO_URL in .env.local");
 }
+
+if (!authToken) {
+  throw new Error("Please define TURSO_AUTH_TOKEN in .env.local");
+}
+
+const client = createClient({ url, authToken });
 
 client.execute(`
   CREATE TABLE IF NOT EXISTS rsvps (
