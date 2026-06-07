@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import local from "next/font/local";
 import Background from "./background";
+import BackgroundMusic from "@/components/BackgroundMusic";
 import FallingLeaves from "./falling-leaves";
 import "./globals.css";
 
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body>
         <Background />
         <FallingLeaves />
+        <BackgroundMusic />
         {children}
       </body>
     </html>

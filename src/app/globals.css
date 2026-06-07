@@ -112,6 +112,16 @@ body {
   50% { transform: translateY(-8px); }
 }
 
+/* Music button pulse */
+@keyframes musicPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); }
+}
+
+.music-loading {
+  animation: musicPulse 1.5s ease-in-out infinite;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
