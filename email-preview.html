@@ -1,23 +1,9 @@
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function sendConfirmationEmail(
-  name: string,
-  to: string,
-  baseUrl: string,
-): Promise<{ success: boolean; error?: string }> {
-  try {
-
-    await resend.emails.send({
-      from: "Anne <anne@18th>",
-      to,
-      subject: "RSVP Received",
-      html: `<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Preview — RSVP Confirmation</title>
 </head>
 <body style="margin:0;padding:0;background-color:#0A1E3F;font-family:Georgia,serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 20px;">
@@ -30,7 +16,7 @@ export async function sendConfirmationEmail(
               <h1 style="margin:0 0 8px;font-size:32px;font-style:italic;font-weight:normal;color:#FFD700;">Thank You</h1>
               <p style="margin:0 0 24px;font-size:11px;color:#8CB4E8;letter-spacing:0.15em;text-transform:uppercase;font-family:Arial,sans-serif;">RSVP Confirmed</p>
               <div style="width:48px;height:1px;background-color:#1A447A;margin:0 auto 28px;"></div>
-              <p style="margin:0 0 8px;font-size:17px;color:#E8F0FF;">Hi ${name},</p>
+              <p style="margin:0 0 8px;font-size:17px;color:#E8F0FF;">Hi Test Guest,</p>
               <p style="margin:0 0 28px;font-size:15px;line-height:1.7;color:#B0C8E8;">
                 Your RSVP has been received. We're looking forward to celebrating with you.
               </p>
@@ -52,13 +38,4 @@ export async function sendConfirmationEmail(
     </tr>
   </table>
 </body>
-</html>`,
-    });
-    return { success: true };
-  } catch (err) {
-    return {
-      success: false,
-      error: err instanceof Error ? err.message : "Unknown error",
-    };
-  }
-}
+</html>

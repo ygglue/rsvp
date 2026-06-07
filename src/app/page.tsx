@@ -46,7 +46,7 @@ export default function HomePage() {
       {groups.map((g, gi) => (
         <div
           key={gi}
-          className="fixed pointer-events-none z-0"
+          className="fixed pointer-events-none z-20"
           style={{
             left: `${g.anchorX}%`,
             top: `${g.anchorY}%`,
@@ -105,7 +105,7 @@ export default function HomePage() {
       ))}
 
       {/* Content Grid */}
-      <div className="relative -z-10 w-full max-w-5xl grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-16 items-start">
+      <div className="relative w-full max-w-5xl grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-16 items-start">
         {/* Left: Event Info */}
         <div className="space-y-10 lg:space-y-12 pt-4 lg:pt-12">
           <div className="stagger-1">
@@ -149,6 +149,16 @@ export default function HomePage() {
               Dark Blue Palette
             </p>
             <ColorPalette />
+            <Image
+              src="/images/outfit.jpg"
+              alt="Outfit example"
+              width={300}
+              height={400}
+              className="w-full rounded-xl border border-[#1A447A]/40"
+            />
+            <p className="text-[#8CB4E8]/70 text-xs italic">
+              We kindly ask that you do your best to follow the attire theme.
+            </p>
           </div>
         </div>
 
@@ -168,7 +178,7 @@ export default function HomePage() {
 
             <div className="relative">
               <h2 className="font-display text-2xl sm:text-3xl italic text-[#FFD700] mb-8">
-                RSVP
+                Enter your details to confirm your attendance
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-5">

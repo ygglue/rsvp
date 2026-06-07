@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%">
+      <stop offset="0%" stop-color="#0a235f"></stop>
+      <stop offset="100%" stop-color="#03133a"></stop>
+    </radialGradient>
+
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8d95c"></stop>
+      <stop offset="100%" stop-color="#c99b1d"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="32" cy="32" r="30" fill="url(#bg)"></circle>
+
+  <!-- Decorative stars -->
+  <g fill="#dfe8ff" opacity="0.8">
+    <circle cx="16" cy="18" r="1"></circle>
+    <circle cx="49" cy="15" r="1"></circle>
+    <circle cx="52" cy="45" r="1.2"></circle>
+    <circle cx="13" cy="47" r="1"></circle>
+  </g>
+
+  <!-- Gold monogram-inspired centerpiece -->
+  <g fill="url(#gold)">
+    <path d="M32 15
+             C24 15 19 20 19 27
+             C19 34 24 39 32 39
+             C40 39 45 34 45 27
+             C45 20 40 15 32 15Z" opacity="0.15"></path>
+
+    <path d="M32 18
+             C25 18 21 22 21 27
+             C21 32 25 36 32 36
+             C39 36 43 32 43 27
+             C43 22 39 18 32 18Z" fill="none" stroke="url(#gold)" stroke-width="2"></path>
+
+    <!-- Elegant flower -->
+    <ellipse cx="32" cy="28" rx="4" ry="10"></ellipse>
+    <ellipse cx="32" cy="28" rx="4" ry="10" transform="rotate(45 32 28)"></ellipse>
+    <ellipse cx="32" cy="28" rx="4" ry="10" transform="rotate(90 32 28)"></ellipse>
+    <ellipse cx="32" cy="28" rx="4" ry="10" transform="rotate(135 32 28)"></ellipse>
+
+    <circle cx="32" cy="28" r="3"></circle>
+  </g>
+
+  <!-- Small leaf accents -->
+  <g fill="#3c5f9e" opacity="0.7">
+    <ellipse cx="18" cy="28" rx="2" ry="4" transform="rotate(-30 18 28)"></ellipse>
+    <ellipse cx="46" cy="36" rx="2" ry="4" transform="rotate(30 46 36)"></ellipse>
+  </g>
+</svg>
