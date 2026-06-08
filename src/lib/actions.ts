@@ -49,6 +49,17 @@ export async function submitRsvp(data: {
   }
 }
 
+export async function sendTestEmail(
+  email: string,
+): Promise<{ success: boolean; error?: string }> {
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") || "https";
+  const host = h.get("x-forwarded-host") || h.get("host") || "localhost:3000";
+  const baseUrl = `${proto}://${host}`;
+
+  return sendConfirmationEmail("Test Guest", email.trim(), baseUrl);
+}
+
 export async function saveFlowersAction(data: GroupConfig[], visualData: VisualConfig) {
   const filePath = path.join(process.cwd(), "src/data/flowers.ts");
 

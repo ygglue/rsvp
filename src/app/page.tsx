@@ -150,15 +150,83 @@ export default function HomePage() {
             </p>
             <ColorPalette />
             <Image
-              src="/images/outfit.jpg"
+              src="/images/outfit.webp"
               alt="Outfit example"
               width={300}
               height={400}
               className="w-full rounded-xl border border-[#1A447A]/40"
             />
+            <div className="space-y-3">
+              <div>
+                <p className="text-[#FFD700] text-xs font-medium uppercase tracking-wider mb-1">
+                  Ladies
+                </p>
+                <p className="text-[#B0C8E8] text-sm flex gap-2">
+                  <span className="text-[#FFD700]/60 shrink-0">&bull;</span>
+                  <span>Long dress or elegant semi-formal attire</span>
+                </p>
+              </div>
+              <div>
+                <p className="text-[#FFD700] text-xs font-medium uppercase tracking-wider mb-1">
+                  Gentlemen
+                </p>
+                <p className="text-[#B0C8E8] text-sm flex gap-2">
+                  <span className="text-[#FFD700]/60 shrink-0">&bull;</span>
+                  <span>
+                    Long-sleeved button-down (rolled sleeves are encouraged),
+                    paired with slacks or formal trousers
+                  </span>
+                </p>
+              </div>
+            </div>
             <p className="text-[#8CB4E8]/70 text-xs italic">
               We kindly ask that you do your best to follow the attire theme.
             </p>
+          </div>
+
+          <div className="stagger-5 space-y-3">
+            <p className="text-[#8CB4E8] text-xs uppercase tracking-[0.2em] font-medium">
+              Important Reminders
+            </p>
+            <ul className="text-[#B0C8E8] text-sm space-y-2.5 leading-relaxed">
+              <li className="flex gap-2">
+                <span className="text-[#FFD700]/60 shrink-0 mt-0.5">
+                  &bull;
+                </span>
+                <span>
+                  Kindly arrive at least 15 minutes before the program begins to
+                  ensure a smooth and timely start to the celebration.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#FFD700]/60 shrink-0 mt-0.5">
+                  &bull;
+                </span>
+                <span>
+                  Please confirm your attendance (RSVP) on or before June 19,
+                  2026.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#FFD700]/60 shrink-0 mt-0.5">
+                  &bull;
+                </span>
+                <span>
+                  Seating is limited and will be reserved exclusively for guests
+                  who have confirmed their attendance.
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#FFD700]/60 shrink-0 mt-0.5">
+                  &bull;
+                </span>
+                <span>
+                  Your presence throughout the event would mean a lot to us, and
+                  we encourage everyone to stay until the conclusion of the
+                  celebration.
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 
