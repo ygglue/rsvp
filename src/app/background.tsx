@@ -142,8 +142,11 @@ export default function Background() {
       gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     }
 
-    let w = Math.round(window.innerWidth * window.devicePixelRatio);
-    let h = Math.round(window.innerHeight * window.devicePixelRatio);
+    const isMobile = window.innerWidth < 768;
+    const dpr = isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio;
+
+    let w = Math.round(window.innerWidth * dpr);
+    let h = Math.round(window.innerHeight * dpr);
     let texScene: WebGLTexture;
     let texBloom: WebGLTexture;
     let texBlur: WebGLTexture;
@@ -165,8 +168,11 @@ export default function Background() {
     }
 
     function resize() {
-      w = Math.round(window.innerWidth * window.devicePixelRatio);
-      h = Math.round(window.innerHeight * window.devicePixelRatio);
+      const isMobile = window.innerWidth < 768;
+      const dpr = isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio;
+
+      w = Math.round(window.innerWidth * dpr);
+      h = Math.round(window.innerHeight * dpr);
       canvas!.width = w;
       canvas!.height = h;
       canvas!.style.width = `${window.innerWidth}px`;
@@ -201,8 +207,14 @@ export default function Background() {
     let raf = 0;
     let starScale = 1.0;
     let densityScale = 1.0;
+    let lastFrame = 0;
 
     function loop(time: number) {
+      if (time - lastFrame < 33.33) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
+      lastFrame = time;
       // Pass 1: Scene
       gl.bindFramebuffer(gl.FRAMEBUFFER, fboScene);
       use(sceneProg);
