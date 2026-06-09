@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { getSpecialRole, getSpecialRoleMessage } from "@/data/specialGuests";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || "smtp.gmail.com",
@@ -17,7 +18,13 @@ export async function sendConfirmationEmail(
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const firstName = name.split(" ")[0];
+    const role = getSpecialRole(name);
+    const roleMessage = role ? getSpecialRoleMessage(role) : "";
     const user = process.env.SMTP_USER || "";
+
+    const specialBlock = role
+      ? `<p style="margin:0 0 16px;font-size:14px;line-height:1.9;color:#FFD700;font-family:Georgia,'Times New Roman',serif;text-align:left;text-decoration:underline;text-underline-offset:3px;">${roleMessage}</p>`
+      : "";
 
     await transporter.sendMail({
       from: `"Anne" <${user}>`,
@@ -62,13 +69,13 @@ export async function sendConfirmationEmail(
             <td style="padding:0 28px 8px;">
               <p style="margin:0 0 18px;font-size:16px;color:#D4AF37;font-family:Georgia,'Times New Roman',serif;text-align:left;">Dear ${firstName},</p>
               <p style="margin:0 0 16px;font-size:14px;line-height:1.9;color:#B0C8E8;font-family:Georgia,'Times New Roman',serif;text-align:left;">
-                As I celebrate this special milestone, I find myself reflecting on the people who have made a difference in my life. Your presence, support, and encouragement have meant so much to me, and I am truly grateful for the role you have played in my journey.
+                As I celebrate this special milestone, I find myself reflecting on the people who have made a difference in my life. Your support and encouragement have meant so much to me, and I am truly grateful for the role you have played in my journey.
               </p>
-              <p style="margin:0 0 16px;font-size:14px;line-height:1.9;color:#B0C8E8;font-family:Georgia,'Times New Roman',serif;text-align:left;">
-                Because of that, it would be an honor to have you join me for this unforgettable occasion. Sharing this moment with you would make the celebration even more meaningful, and I sincerely hope you can be there to celebrate this special day with me.
+              ${specialBlock}<p style="margin:0 0 16px;font-size:14px;line-height:1.9;color:#B0C8E8;font-family:Georgia,'Times New Roman',serif;text-align:left;">
+                Sharing this moment with you would make the occasion even more meaningful, and I sincerely hope you can join me.
               </p>
               <p style="margin:0 0 32px;font-size:14px;line-height:1.9;color:#B0C8E8;font-family:Georgia,'Times New Roman',serif;text-align:left;">
-                I look forward to celebrating with you.
+                I'm so excited to see you on July 6th.
               </p>
               <p style="margin:0 0 4px;font-size:13px;font-style:italic;color:#8CB4E8;font-family:Georgia,'Times New Roman',serif;text-align:left;">With love,</p>
               <p style="margin:0 0 2px;font-size:15px;letter-spacing:0.08em;color:#FFD700;font-family:Georgia,'Times New Roman',serif;text-align:left;">Anne Gabrielle Bacuel</p>

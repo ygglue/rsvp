@@ -33,10 +33,10 @@ function fadeVolume(
   const start = performance.now();
 
   function step(now: number) {
-    const elapsed = now - start;
+    const elapsed = Math.max(0, now - start);
     const progress = Math.min(elapsed / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 2);
-    audio.volume = from + (to - from) * eased;
+    audio.volume = Math.max(0, Math.min(1, from + (to - from) * eased));
 
     if (progress < 1) {
       rafRef.current = requestAnimationFrame(step);
