@@ -39,7 +39,7 @@ export default function SuccessPage() {
             </p>
             <div className="text-sm text-[#B0C8E8] space-y-1">
               <p>July 6, 2026 · 6:00 PM</p>
-              <p>Villa El Dantess</p>
+              <p>Mangrove at Sunlight Hotel Puerto Princesa</p>
             </div>
           </div>
 

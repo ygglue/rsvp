@@ -8,7 +8,7 @@ export const eighteenRoses = [
   "John Mar Collins Uy",
   "Robert Joaquin Puno",
   "Redd Andrey Castillo",
-  "Sean Nambatac",
+  "Caetan Logronio",
   "Claudio Favila",
   "Ramses Apostol",
   "Khurt Dave Palanca",
@@ -34,8 +34,8 @@ export const eighteenCandles = [
   "Kee Libiran",
   "Azumi Gail Rapsing",
   "Michelle Angela Illustrisimo",
+  "Khriz Claveria",
   "Jedidiah Minor",
-  "Jennelle Mikee Ansay",
   "Yasmin Puche",
   "Daniela Asther Tinasas",
 ];

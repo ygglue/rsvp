@@ -127,11 +127,11 @@ export default function HomePage() {
               Venue
             </p>
             <p className="text-[#E8F0FF] text-xl sm:text-2xl font-display">
-              Villa El Dantess
+              Mangrove at Sunlight Hotel Puerto Princesa
             </p>
             <div className="rounded-xl overflow-hidden border border-[#1A447A]/40 mt-3">
               <iframe
-                src="https://maps.google.com/maps?q=Villa+El+Dantess&output=embed"
+                src="https://maps.google.com/maps?q=Mangrove+at+Sunlight+Hotel+Puerto+Princesa&output=embed"
                 width="100%"
                 height="160"
                 style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
@@ -203,7 +203,7 @@ export default function HomePage() {
                   &bull;
                 </span>
                 <span>
-                  Please confirm your attendance (RSVP) on or before June 19,
+                  Please confirm your attendance (RSVP) on or before June 20,
                   2026.
                 </span>
               </li>

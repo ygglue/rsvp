@@ -101,7 +101,7 @@ export async function sendConfirmationEmail(
                     <p style="margin:0 0 8px;font-size:18px;font-style:italic;color:#FFD700;font-family:Georgia,'Times New Roman',serif;">Anne&rsquo;s 18th Birthday</p>
                     <p style="margin:0;font-size:13px;color:#B0C8E8;font-family:Georgia,'Times New Roman',serif;line-height:1.8;">
                       July 6, 2026 &middot; 6:00 PM<br>
-                      Villa El Dantess
+                      Mangrove at Sunlight Hotel Puerto Princesa
                     </p>
                   </td>
                 </tr>
