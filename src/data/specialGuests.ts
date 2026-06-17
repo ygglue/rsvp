@@ -59,6 +59,24 @@ export function getSpecialRole(name: string): SpecialRole {
   return null;
 }
 
+export type RsvpEntry = { name: string; email: string; createdAt: string };
+
+export function findRsvpMatch(
+  listName: string,
+  rsvps: RsvpEntry[],
+): RsvpEntry | null {
+  const words = listName.toLowerCase().split(/\s+/);
+  return (
+    rsvps.find((r) => {
+      const rsvpLower = r.name.toLowerCase();
+      if (words.length < 2) return rsvpLower.includes(words[0]);
+      const first = words[0];
+      const last = words[words.length - 1];
+      return rsvpLower.includes(first) && rsvpLower.includes(last);
+    }) ?? null
+  );
+}
+
 export function getSpecialRoleMessage(role: "rose" | "candle"): string {
   if (role === "rose") {
     return "You are one of my 18 Roses, and it would mean the world to me to have you stand beside me during this cherished part of my celebration.";
