@@ -30,7 +30,7 @@ export const eighteenCandles = [
   "Aliana Jewah Servando",
   "Thesa Monroid",
   "Shanna Otchia",
-  "Aloha Telio",
+  "Jezreel Bacuel",
   "Kee Libiran",
   "Azumi Gail Rapsing",
   "Michelle Angela Illustrisimo",
