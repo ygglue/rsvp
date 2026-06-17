@@ -23,7 +23,7 @@ export const eighteenCandles = [
   "Margarita Uy",
   "Sarah Maguale",
   "Jeric Del Mundo",
-  "Justinn Sabellano",
+  "Jenelle Mikee Ansay",
   "Glyza May Colonia",
   "Miel Antonette Cinco",
   "Ricka Jade Heredero",
